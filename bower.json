@@ -1,0 +1,29 @@
+{
+  "name": "backbone.sos",
+  "version": "1.0.0",
+  "authors": [
+    "Hernan Lozano <hernantz@gmail.com>"
+  ],
+  "description": "Allows you to know if your data is being loaded or not",
+  "main": "index.js",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "backbone",
+    "status",
+    "sync",
+    "models",
+    "loading",
+    "collections"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
