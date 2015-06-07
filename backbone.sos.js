@@ -16,7 +16,9 @@
     ], factory);
 
   } else {
+
     factory(_, Backbone);
+
   }
 
 }(this, function (_, Backbone) {
@@ -43,6 +45,11 @@
       obj.loading = false;
       obj.on(options.loadingEvents.join(" "), onRequest, obj);
       obj.on(options.loadedEvents.join(" "), onResponse, obj);
+    },
+    untrack: function (obj) {
+      delete obj.loading;
+      obj.off(null, onRequest);
+      obj.off(null, onResponse);
     }
   };
 
