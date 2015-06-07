@@ -1,15 +1,15 @@
 {
   "name": "backbone.sos",
   "version": "1.0.0",
-  "description": "Allows you to know if your data is being loaded or not",
-  "main": "index.js",
+  "description": "Allows you to determine if your data is being loaded or not",
+  "main": "backbone.sos.js",
   "scripts": {
-    "clean": "rimraf dist/*",
     "jshint": "jshint backbone.sos.js",
-    "prebuild": "npm run jshing -s && npm run clean -s",
-    "build": "",
+    "prebuild": "npm run jshint -s",
+    "build": "uglifyjs backbone.sos.js --mangle --output backbone.sos.min.js --source-map backbone.sos.min.map",
     "test": "karma start --singleRun"
   },
+  "files": ["backbone.sos.js", "backbone.sos.min.js", "backbone.sos.min.map", "LICENSE"],
   "repository": {
     "type": "git",
     "url": "https://github.com/hernantz/backbone-sos.git"
@@ -20,8 +20,11 @@
     "sync",
     "synchronization",
     "loading",
-    "models",
-    "collections"
+    "loaded",
+    "load",
+    "model",
+    "collection",
+    "view"
   ],
   "author": "Hernan Lozano <hernantz@gmail.com>",
   "license": "MIT",
