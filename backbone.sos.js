@@ -1,3 +1,7 @@
+// Backbone.SOS
+// Distributed under MIT license
+// http://github.com/hernantz/backbone.sos
+
 ;(function (root, factory) {
   "use strict";
 
