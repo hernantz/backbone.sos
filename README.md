@@ -8,6 +8,7 @@ models and collections).
 
 One clear use case is that now you can write views that "react" accondingly to
 the loading state of your data, and make your app feel snappier.
+[Check a demo here](http://hernantz.github.io/backbone.sos/).
 
 
 # Dependencies and setup
