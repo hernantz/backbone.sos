@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Backbone SOS demo</title>
+    <link href="http://backbonejs.org/favicon.ico" rel="small icon" />
+
+    <!-- Bootstrap -->
+    <link href="/demo/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/demo/styles.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+   <div class="container">
+      <div class="row text-center"><h1>Backbone SOS</h1></div>
+      <div class="row">
+        <div class="callout">
+          <h4><b>S</b>tate <b>O</b>f <b>S</b>ync</h4>
+          <p>
+          Sometimes you need to know whether a model/collection is interacting with the server or not.
+          Backbone SOS can help you track this in a very decoupled way, by keeping the loading state where it belongs (inside your model/collection).
+          </p>
+          <p>
+          Here is a dummy example of how you can write views that "react" accondingly to this 
+          loading state, and make your app feel snappier.
+          </p>
+        </div>
+      </div>
+      <header class="row">
+        <form class="form-inline">
+          <button id="retrieve" class="btn btn-default">Retrieve comments</button>
+          <button id="no-retrieve" class="btn btn-default">Retrieve no comments</button>
+          <button id="clear" class="btn btn-default">Empty current comments</button>
+          <div class="checkbox">
+            <label><input id="simulate" type="checkbox"> Simulate error response</label>
+          </div>
+        </form>
+      </header>
+
+      <div class="row">
+      <div id="comments-feed">
+        <div class="panel panel-primary">
+          <!-- Default panel contents -->
+          <div class="panel-heading">Comments feed</div>
+          <div class="panel-body">
+
+            <!-- New comment -->
+            <div class="row" id="add-comment">
+              <div class="col-md-12 add-comment">
+                <div class="panel panel-default">
+                  <div class="panel-body">
+                    <textarea placeholder="What are you doing right now?" ></textarea>
+                  </div>
+                  <div class="panel-footer"><button class="btn btn-success"><i class="glyphicon glyphicon-share"></i> Comment</button></div>
+                </div>
+              </div>
+            </div>
+
+            <hr />
+
+            <!-- Comments -->
+            <div id="comments"> 
+              <div class="row">
+                <div class="col-md-12 comment">
+                  <div class="col-sm-2">
+                    <div class="thumbnail">
+                      <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                    </div><!-- /thumbnail -->
+                  </div><!-- /col-sm-1 -->
+
+                  <div class="col-sm-10">
+                    <div class="panel panel-default">
+                      <div class="panel-heading">
+                        <strong class="dark-placeholder">myusername</strong> <span class="text-muted placeholder">commented 5 days ago</span>
+                      </div>
+                      <div class="panel-body loading"> Loading content <span>.</span><span>.</span><span>.</span></div><!-- /panel-body -->
+                    </div><!-- /panel panel-default -->
+                  </div><!-- /col-sm-5 -->
+                </div> <!-- /comment-->
+              </div> <!-- /row -->
+            </div> <!-- /comments -->
+          </div> <!-- /panel-body -->
+        </div>
+        </div>
+      </div>
+    </div>
+
+    <script data-main="main" src="node_modules/requirejs/require.js"></script>
+    
+    <script id="tpl-add-new" type="text/template">
+      <% if (errors) { %> 
+        <div class="alert alert-danger alert-dismissable">
+          <%=errors%>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div> 
+      <% } %>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <textarea <% if (loading) { %> disabled <% } %> placeholder="What are you doing right now?"><%=comment%></textarea>
+        </div>
+        <div class="panel-footer"><button <% if (loading) { %> disabled <% } %>  class="btn btn-success"><i class="glyphicon glyphicon-share"></i> <% if (loading) { %>Wait...<% } else { %>Comment<% } %></button></div>
+      </div>
+    </script>
+
+    <script id="tpl-loading" type="text/template">
+      <div class="col-md-12 comment">
+        <div class="col-sm-2">
+          <div class="thumbnail">
+            <img class="img-responsive user-photo" src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+          </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+
+        <div class="col-sm-10">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <strong class="dark-placeholder">myusername</strong> <span class="text-muted placeholder">commented 5 days ago</span>
+            </div>
+            <div class="panel-body loading"> Loading content <span>.</span><span>.</span><span>.</span></div><!-- /panel-body -->
+          </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+      </div> <!-- /comment-->
+    </script>
+
+    <script id="tpl-comment" type="text/template">
+      <div class="col-md-12 comment">
+        <div class="col-sm-2">
+          <div class="thumbnail">
+            <img class="img-responsive user-photo" src="<%=img%>">
+          </div><!-- /thumbnail -->
+        </div><!-- /col-sm-1 -->
+
+        <div class="col-sm-10">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <strong><%=nickname%></strong> <span class="text-muted">commented 5 days ago</span>
+            </div>
+            <div class="panel-body"> <%=comment%> </div><!-- /panel-body -->
+          </div><!-- /panel panel-default -->
+        </div><!-- /col-sm-5 -->
+      </div> <!-- /comment-->
+    </script>
+
+    <script id="tpl-empty" type="text/template">
+      No results found. Be the first one to comment!
+    </script>
+
+  </body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "demo",
+  "version": "1.0.0",
+  "description": "Demo for backbone-sos",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "backbone": "^1.2.0",
+    "backbone.marionette": "^2.4.1",
+    "bootstrap": "^3.3.4",
+    "jquery": "^2.1.4",
+    "requirejs": "^2.1.17",
+    "sinon": "^1.14.1",
+    "underscore": "^1.8.3"
+  }
+}

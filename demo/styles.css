@@ -1,0 +1,116 @@
+@-webkit-keyframes opacity {
+	0% { opacity: 1; }
+	100% { opacity: 0; }
+}
+@-moz-keyframes opacity {
+	0% { opacity: 1; }
+	100% { opacity: 0; }
+}
+
+.loading {
+}
+
+.loading span {
+	-webkit-animation-name: opacity;
+	-webkit-animation-duration: 1s;
+	-webkit-animation-iteration-count: infinite;
+	
+	-moz-animation-name: opacity;
+	-moz-animation-duration: 1s;
+	-moz-animation-iteration-count: infinite;
+}
+
+.loading span:nth-child(2) {
+	-webkit-animation-delay: 100ms;
+	-moz-animation-delay: 100ms;
+}
+
+.loading span:nth-child(3) {
+	-webkit-animation-delay: 300ms;
+	-moz-animation-delay: 300ms;
+}
+
+/* Add comment widget */
+.add-comment .panel-body {
+    padding: 0px;
+}
+
+.add-comment textarea {
+    padding: 10px;
+    border: none;
+    width: 100%;
+}
+
+/* Comments feed */
+/* http://bootsnipp.com/snippets/featured/user-comment-example */
+#comments-feed {
+    max-width: 600px;
+    margin: 30px auto;
+}
+
+.comment .thumbnail {
+    padding:0px;
+}
+.comment .panel {
+	position:relative;
+}
+.comment .panel>.panel-heading:after,.comment .panel>.panel-heading:before{
+	position:absolute;
+	top:11px;left:-16px;
+	right:100%;
+	width:0;
+	height:0;
+	display:block;
+	content:" ";
+	border-color:transparent;
+	border-style:solid solid outset;
+	pointer-events:none;
+}
+.comment .panel>.panel-heading:after{
+	border-width:7px;
+	border-right-color:#f7f7f7;
+	margin-top:1px;
+	margin-left:2px;
+}
+.comment .panel>.panel-heading:before{
+	border-right-color:#ddd;
+	border-width:8px;
+}
+
+/* placeholders */
+.placeholder {
+    background-color: #E9E9E9;
+    color: #E9E9E9;
+}
+
+.dark-placeholder {
+    background-color: #C9C9C9;
+    color: #C9C9C9;
+}
+
+.traslucid {
+    opacity: 0.6;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+}
+
+.callout {
+    padding: 20px;
+    margin: 20px auto;
+    border: 1px solid #EEE;
+    border-left-width: 5px;
+    border-radius: 3px;
+    max-width: 600px;
+}
+
+.callout h4 {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.callout p:last-child {
+    margin-bottom: 0px;
+}
