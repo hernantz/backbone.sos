@@ -11,7 +11,7 @@ the loading state of your data, and make your app feel snappier.
 [Check a demo here](http://hernantz.github.io/backbone.sos/).
 
 
-# Dependencies and setup
+## Dependencies and setup
 Backbone (v1.0 onwards) is the only dependency. Include `backbone.sos.js` or
 `backbone.sos.min.js` after Backbone. Alternatively Backbone.SOS can be used as
 an AMD (Requirejs) module as well as a regular CommonJS module.
@@ -22,12 +22,12 @@ bower install backbone.sos  # using bower
 npm install backbone.sos    # using npm
 ```
 
-# Tracking models and collections
+## Tracking models and collections
 Backbone.SOS listens for `request` events on tracked models and collections to
 set the `loading` state to `true`. When the `sync` or `error` events are
 triggered, the `loading` state is set to `false`.
 
-## Tracking a single instance
+### Tracking a single instance
 ```javascript
 // Tracking a single model instance
 var model = new Backbone.Model;
@@ -38,7 +38,7 @@ var collection = new Backbone.Collection;
 Backbone.SOS.track(collection);
 ```
 
-## Tracking all instances
+### Tracking all instances
 ```javascript
 var MyModel = Backbone.Model.extend({
   initialize: function () {
@@ -54,7 +54,7 @@ var MyCollection = Backbone.Collection.extend({
 });
 ```
 
-# The *loading* property
+## The *loading* property
 Backbone.SOS sets a new property `loading` on the objects you track. The value
 of this property is tracked by Backbone.SOS, and can be either `true` or
 `false` depending on the state of the request/response cycle the object
@@ -80,7 +80,7 @@ console.log(collection.loading);    // prints: true
 console.log(collection.loading);    // prints: false
 ```
 
-# Simple view example
+## Simple view example
 This is a simple example to show how it comes to be useful to know the state of
 sync of your data. Check for a more realistic example on the demo folder.
 
@@ -100,9 +100,28 @@ var EditUsernameView = Backbone.View.extend({
 });
 ```
 
-# Custom events
-# caveats
+## Caveats
 Since event callbacks are called in the order in which they were "scheduled",
-Try to track your models/collections as early as possible, ie in their initialize
-methods.
-The `track()` method assumes `loading = false` by default.
+try to track your models/collections as early as possible, ie. in their
+initialize methods, otherwise you could be reacting to events or rendering
+your models/collections before they are marked as `loading` or `loaded`.
+
+```javascript
+// Here model will trigger sync and doSomething() will still perceive
+// `model.loading` as `true` when it should be `false` since it just sync'ed.
+model.on("sync", doSomething);
+// will hook to "sync" signal, but doSomething is called first
+Backbone.SOS.track(model);
+// loading = true
+model.fetch();
+```
+
+The `track()` method assumes `loading = false` by default, so if the model had
+started a request/response cycle, before it started being tracked by
+Backbone.SOS, the `loading` property will not reflect the real state of sync.
+
+```javascript
+model.fetch();
+Backbone.SOS.track(model);
+console.log(model.loading); // prints false, even if the fetching is still ongoing
+```
