@@ -10,7 +10,6 @@ One clear use case is that now you can write views that "react" accondingly to
 the loading state of your data, and make your app feel snappier.
 [Check a demo here](http://hernantz.github.io/backbone.sos/).
 
-
 ## Dependencies and setup
 Backbone (v1.0 onwards) is the only dependency. Include `backbone.sos.js` or
 `backbone.sos.min.js` after Backbone. Alternatively Backbone.SOS can be used as
@@ -24,8 +23,10 @@ npm install backbone.sos    # using npm
 
 ## Tracking models and collections
 Backbone.SOS listens for `request` events on tracked models and collections to
-set the `loading` state to `true`. When the `sync` or `error` events are
-triggered, the `loading` state is set to `false`.
+set the `loading` state to `true`, meaning that the object started a request to
+the server (on a fetch, save, create, etc). When the `sync` or `error` events
+are triggered, the server has responded, and the `loading` state is set to
+`false`.
 
 ### Tracking a single instance
 ```javascript
@@ -78,6 +79,36 @@ collection.fetch();
 console.log(collection.loading);    // prints: true
 // later, once the server responded...
 console.log(collection.loading);    // prints: false
+```
+
+## The *loading* and *loaded* events
+Objects being tracked by Backbone.SOS will emit a `loading` signal when the
+`loading` property is set to `true`, and a `loaded` signal when that property
+is set to `false`, except when this property is initialized.
+On both cases the tracked object is passed as a param to the signal callback.
+This tip is useful since events on models propagate to the collections they are
+contained in, so you could attach a callback to the `loading` and `loaded`
+events for different models on the collection that contains them.
+
+```javascript
+var MyModel = Backbone.Model.extend({
+  initialize: function () {
+    Backbone.SOS.track(this);
+  }
+});
+
+var fst = new MyModel,
+    snd = new MyModel;
+
+var collection = new Backbone.Collection([fst, snd]);
+
+collection.on("loading", function (model) {
+  // do something interesting here
+});
+
+collection.on("loaded", function (model) {
+  // do something interesting here
+});
 ```
 
 ## Simple view example
