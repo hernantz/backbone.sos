@@ -1,9 +1,0 @@
-.DS_Store
-*.swp
-*.swo
-*.orig
-*.log
-tmp/
-ext/
-node_modules/
-bower_components/
