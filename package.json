@@ -9,7 +9,7 @@
     "build": "uglifyjs backbone.sos.js --mangle --output backbone.sos.min.js --source-map backbone.sos.min.map",
     "test": "karma start --singleRun"
   },
-  "files": ["backbone.sos.js", "backbone.sos.min.js", "backbone.sos.min.map", "LICENSE"],
+  "files": ["backbone.sos.js", "backbone.sos.min.js", "backbone.sos.min.map", "LICENSE", "README.md"],
   "repository": {
     "type": "git",
     "url": "https://github.com/hernantz/backbone-sos.git"
