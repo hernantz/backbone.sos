@@ -7,7 +7,7 @@ requirejs.config({
     "sinon": "sinon/lib/sinon",
     "underscore": "underscore/underscore",
     "backbone": "backbone/backbone",
-    "backbone.sos": "/backbone.sos",
+    "backbone.sos": "../backbone.sos",
     "marionette": "backbone.marionette/lib/backbone.marionette",
     "bootstrap": "bootstrap/dist/js/bootstrap" 
   },
