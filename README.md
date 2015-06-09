@@ -10,6 +10,8 @@ One clear use case is that now you can write views that "react" accondingly to
 the loading state of your data, and make your app feel snappier.
 [Check a demo here](http://hernantz.github.io/backbone.sos/).
 
+![Backbone.SOS in action](http://i.giphy.com/l0O9xpyfJDCPYeLq8.gif)
+
 ## Dependencies and setup
 Backbone (v1.0 onwards) is the only dependency. Include `backbone.sos.js` or
 `backbone.sos.min.js` after Backbone. Alternatively Backbone.SOS can be used as
