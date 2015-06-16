@@ -134,10 +134,14 @@ var EditUsernameView = Backbone.View.extend({
 ```
 
 ## Caveats
-Since event callbacks are called in the order in which they were "scheduled",
-try to track your models/collections as early as possible, ie. in their
-initialize methods, otherwise you could be reacting to events or rendering
-your models/collections before they are marked as `loading` or `loaded`.
+Because Backbone handles events like a FIFO (the first to hook for a signal is
+the first to listen to it), you want the callbacks that alter the state of your
+data to be called before your views can render that state. Generally, the best
+place to setup these callbacks is the `initialize` method of your models and
+collections. In other words, try to track your models/collections as early as
+possible, ie. in their initialize methods, otherwise you could be reacting to
+events or rendering your models/collections before they are marked as `loading`
+or `loaded`.
 
 ```javascript
 // Here model will trigger sync and doSomething() will still perceive
