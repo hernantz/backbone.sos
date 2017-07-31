@@ -40,6 +40,7 @@
 
   var onResponse = function (obj) {
     obj.loading = false;
+    if (!obj.loaded) obj.loaded = true;
     obj.trigger("loaded", obj);
   };
 
@@ -47,11 +48,13 @@
     track: function (obj, options) {
       options = _.extend(_.clone(opts), options);
       obj.loading = false;
+      obj.loaded = false;
       obj.on(options.loadingEvents.join(" "), onRequest, obj);
       obj.on(options.loadedEvents.join(" "), onResponse, obj);
     },
     untrack: function (obj) {
       delete obj.loading;
+      delete obj.loaded;
       obj.off(null, onRequest);
       obj.off(null, onResponse);
     }
