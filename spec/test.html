@@ -21,10 +21,14 @@
       it("should start tracking models and collections as loaded", function () {
         expect(this.model.loading).toBe(undefined);
         expect(this.collection.loading).toBe(undefined);
+        expect(this.model.loaded).toBe(undefined);
+        expect(this.collection.loaded).toBe(undefined);
         Backbone.SOS.track(this.model);
         Backbone.SOS.track(this.collection);
         expect(this.model.loading).toBe(false);
         expect(this.collection.loading).toBe(false);
+        expect(this.model.loaded).toBe(false);
+        expect(this.collection.loaded).toBe(false);
       });
       it("should listen to the request event and set the loading state to true", function () {
         Backbone.SOS.track(this.model);
@@ -36,6 +40,16 @@
         expect(this.model.loading).toBe(true);
         expect(this.collection.loading).toBe(true);
       });
+      it("should listen to the request event and keep loaded in false", function () {
+        Backbone.SOS.track(this.model);
+        Backbone.SOS.track(this.collection);
+        expect(this.model.loaded).toBe(false);
+        expect(this.collection.loaded).toBe(false);
+        this.model.trigger("request", this.model);
+        this.collection.trigger("request", this.collection);
+        expect(this.model.loaded).toBe(false);
+        expect(this.collection.loaded).toBe(false);
+      });
       it("should listen to the error event and set the loading state to false", function () {
         Backbone.SOS.track(this.model);
         Backbone.SOS.track(this.collection);
@@ -46,6 +60,14 @@
         expect(this.model.loading).toBe(false);
         expect(this.collection.loading).toBe(false);
       });
+      it("should listen to the error event and set the loaded state to true", function () {
+        Backbone.SOS.track(this.model);
+        Backbone.SOS.track(this.collection);
+        this.model.trigger("error", this.model);
+        this.collection.trigger("error", this.collection);
+        expect(this.model.loaded).toBe(true);
+        expect(this.collection.loaded).toBe(true);
+      });
       it("should listen to the sync event and set the loading state to false", function () {
         Backbone.SOS.track(this.model);
         Backbone.SOS.track(this.collection);
@@ -55,6 +77,16 @@
         this.collection.trigger("sync", this.collection);
         expect(this.model.loading).toBe(false);
         expect(this.collection.loading).toBe(false);
+      });
+      it("should listen to the sync event and set the loaded state to true", function () {
+        Backbone.SOS.track(this.model);
+        Backbone.SOS.track(this.collection);
+        expect(this.model.loaded).toBe(false);
+        expect(this.collection.loaded).toBe(false);
+        this.model.trigger("sync", this.model);
+        this.collection.trigger("sync", this.collection);
+        expect(this.model.loaded).toBe(true);
+        expect(this.collection.loaded).toBe(true);
       });
       it("should listen to the given loading event option", function () {
         Backbone.SOS.track(this.model, {"loadingEvents": ["foo"]});
@@ -110,38 +142,54 @@
           Backbone.SOS.untrack(this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
           this.model.trigger("request", this.model);
           this.collection.trigger("request", this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
         });
         it("should stop listening for the object's sync event", function () {
           Backbone.SOS.track(this.model);
           Backbone.SOS.track(this.collection);
           expect(this.model.loading).toBe(false);
           expect(this.collection.loading).toBe(false);
+          expect(this.model.loaded).toBe(false);
+          expect(this.collection.loaded).toBe(false);
           Backbone.SOS.untrack(this.model);
           Backbone.SOS.untrack(this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
           this.model.trigger("sync", this.model);
           this.collection.trigger("sync", this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
         });
         it("should stop listening for the object's error event", function () {
           Backbone.SOS.track(this.model);
           Backbone.SOS.track(this.collection);
           expect(this.model.loading).toBe(false);
           expect(this.collection.loading).toBe(false);
+          expect(this.model.loaded).toBe(false);
+          expect(this.collection.loaded).toBe(false);
           Backbone.SOS.untrack(this.model);
           Backbone.SOS.untrack(this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
           this.model.trigger("error", this.model);
           this.collection.trigger("error", this.collection);
           expect(this.model.loading).toBe(undefined);
           expect(this.collection.loading).toBe(undefined);
+          expect(this.model.loaded).toBe(undefined);
+          expect(this.collection.loaded).toBe(undefined);
         });
         it("should only unbind for SOS callbacks", function () {
           var customModelCallback = jasmine.createSpy("customModelCallback");
@@ -150,6 +198,8 @@
           Backbone.SOS.track(this.collection);
           expect(this.model.loading).toBe(false);
           expect(this.collection.loading).toBe(false);
+          expect(this.model.loaded).toBe(false);
+          expect(this.collection.loaded).toBe(false);
           this.model.on("request", customModelCallback);
           this.collection.on("request", customCollectionCallback);
           Backbone.SOS.untrack(this.model);

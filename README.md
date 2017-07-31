@@ -83,6 +83,30 @@ console.log(collection.loading);    // prints: true
 console.log(collection.loading);    // prints: false
 ```
 
+## The *loaded* property
+This property will be set after the tracked object be fetched at least once.
+As *loading* property, *loaded* property is also a Boolean one. In case the
+model/collection has been never synchronized, the property value will be false.
+
+```javascript
+Backbone.SOS.track(model);
+console.log(model.loaded);         // prints: false
+model.save({foo: "bar"});
+/ Before server responds.
+console.log(model.loaded);         // prints: false
+// later, once the server responded...
+console.log(model.loaded);         // prints: true
+
+
+var collection = new MyCollection;  // as defined above
+console.log(collection.loaded);    // prints: false
+collection.fetch();
+// later, once the server responded...
+console.log(collection.loaded);    // prints: true
+```
+
+
+
 ## The *loading* and *loaded* events
 Objects being tracked by Backbone.SOS will emit a `loading` signal when the
 `loading` property is set to `true`, and a `loaded` signal when that property
