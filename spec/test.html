@@ -211,6 +211,33 @@
         });
       });
 
+      describe("the resetTracking method", function () {
+        it("should set loading attribute to false", function () {
+          Backbone.SOS.track(this.model);
+          Backbone.SOS.track(this.collection);
+          expect(this.model.loading).toBe(false);
+          expect(this.collection.loading).toBe(false);
+          this.model.loading = true;
+          this.collection.loading = true;
+          Backbone.SOS.resetTracking(this.model);
+          Backbone.SOS.resetTracking(this.collection);
+          expect(this.model.loading).toBe(false);
+          expect(this.collection.loading).toBe(false);
+        });
+      it("should set loaded attribute to false", function () {
+          Backbone.SOS.track(this.model);
+          Backbone.SOS.track(this.collection);
+          expect(this.model.loaded).toBe(false);
+          expect(this.collection.loaded).toBe(false);
+          this.model.loaded = true;
+          this.collection.loaded = true;
+          Backbone.SOS.resetTracking(this.model);
+          Backbone.SOS.resetTracking(this.collection);
+          expect(this.model.loaded).toBe(false);
+          expect(this.collection.loaded).toBe(false);
+        });
+      });
+
       describe("should trigger", function () {
         beforeEach(function () {
           this.modelLoadingCallback = jasmine.createSpy("modelLoadingCallback");
