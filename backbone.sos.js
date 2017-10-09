@@ -57,6 +57,10 @@
       delete obj.loaded;
       obj.off(null, onRequest);
       obj.off(null, onResponse);
+    },
+    resetTracking: function (obj) {
+        obj.loading = false;
+        obj.loaded = false;
     }
   };
 
