@@ -137,6 +137,26 @@ collection.on("loaded", function (model) {
 });
 ```
 
+
+## The resetTracking method
+This method is useful when, for some reason, you need to reset *loading* and
+*loaded* properties. Calling this method both properties will be set to *false*.
+```javascript
+Backbone.SOS.track(model);
+console.log(model.loaded);         // prints: false
+model.save({foo: "bar"});
+// Before server responds.
+console.log(model.loading);         // prints: true
+console.log(model.loaded);         // prints: false
+// later, once the server responded...
+console.log(model.loading);         // prints: false
+console.log(model.loaded);         // prints: true
+Backbone.SOS.resetTracking(model);
+console.log(model.loading);         // prints: false
+console.log(model.loaded);         // prints: false
+```
+
+
 ## Simple view example
 This is a simple example to show how it comes to be useful to know the state of
 sync of your data. Check for a more realistic example on the demo folder.
