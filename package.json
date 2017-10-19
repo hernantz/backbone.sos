@@ -1,6 +1,6 @@
 {
   "name": "backbone.sos",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Allows you to determine if your data is being loaded or not",
   "main": "backbone.sos.js",
   "scripts": {
